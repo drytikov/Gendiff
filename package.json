@@ -1,0 +1,46 @@
+{
+  "name": "gendiff123456",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "bin": {
+    "gendiff": "dist/bin/gendiff.js"
+  },
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "test": "jest",
+    "babel-node": "babel-node",
+    "eslint": "eslint"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "node_modules"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drytikov/project-lvl2-s129.git"
+  },
+  "author": "drytikov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drytikov/project-lvl2-s129/issues"
+  },
+  "homepage": "https://github.com/drytikov/project-lvl2-s129#readme",
+  "devDependencies": {
+    "babel-cli": "*",
+    "babel-core": "*",
+    "babel-eslint": "*",
+    "babel-preset-env": "*",
+    "babel-preset-stage-0": "*",
+    "eslint": "*",
+    "eslint-config-airbnb-base": "*",
+    "eslint-plugin-import": "*",
+    "jest": "^21.2.1"
+  },
+  "dependencies": {
+    "commander": "^2.11.0"
+  }
+}
