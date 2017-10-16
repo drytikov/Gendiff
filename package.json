@@ -2,7 +2,7 @@
   "name": "gendiff123456",
   "version": "0.1.0",
   "description": "",
-  "main": "dist/bin/gendiff.js",
+  "main": "dist/index.js",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
   },
