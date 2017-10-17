@@ -9,3 +9,7 @@ test('genDiff(JSON)', () => {
 test('genDiff(YAML)', () => {
   expect(genDiff('__tests__/fixtures/before.yml', '__tests__/fixtures/after.yml')).toBe(result);
 });
+
+test('genDiff(INI)', () => {
+  expect(genDiff('__tests__/fixtures/before.ini', '__tests__/fixtures/after.ini')).toBe(result);
+});
