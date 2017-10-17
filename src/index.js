@@ -1,21 +1,10 @@
-import fs from 'fs';
-import _ from 'lodash';
+import Json from '../src/Json';
+import Yaml from '../src/Yaml';
+import GenDiffAdapter from '../src/GenDiffAdapter';
 
 export default (filePath1, filePath2) => {
-  const file1 = JSON.parse(fs.readFileSync(filePath1, 'utf8'));
-  const file2 = JSON.parse(fs.readFileSync(filePath2, 'utf8'));
-  const uniqueItems = _.union(Object.keys(file1), Object.keys(file2));
-  const result = uniqueItems.reduce((acc, key) => {
-    if (file1[key] && !file2[key]) {
-      return [...acc, `  - ${key}: ${file1[key]}`];
-    }
-    if (file2[key] && !file1[key]) {
-      return [...acc, `  + ${key}: ${file2[key]}`];
-    }
-    if (file2[key] !== file1[key]) {
-      return [...acc, `  + ${key}: ${file2[key]}`, `  - ${key}: ${file1[key]}`];
-    }
-    return [...acc, `    ${key}: ${file2[key]}`];
-  }, []);
-  return ['{', ...result, '}'].join('\n');
+  const genDiff = (filePath1.indexOf('json') + 1)
+    ? new Json(filePath1, filePath2) : new Yaml(filePath1, filePath2);
+  const genDiffAdapter = new GenDiffAdapter(genDiff);
+  return genDiffAdapter.compareFiles();
 };
