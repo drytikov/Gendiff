@@ -7,15 +7,15 @@ import compareParsedData from '../src/compareParsedData';
 export default (filePath1, filePath2) => {
   const parsersList = [
     {
-      parser: file => JSON.parse(file),
+      parser: data => JSON.parse(data),
       check: arg => (arg.indexOf('json') + 1),
     },
     {
-      parser: file => yaml.safeLoad(file),
+      parser: data => yaml.safeLoad(data),
       check: arg => (arg.indexOf('yml') + 1),
     },
     {
-      parser: file => ini.parse(file),
+      parser: data => ini.parse(data),
       check: arg => (arg.indexOf('ini') + 1),
     },
   ];
