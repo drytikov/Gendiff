@@ -5,21 +5,21 @@ const iterAst = (parsedData1, parsedData2) => {
   return uniqueItems.reduce((acc, key) => {
     if (parsedData1[key] instanceof Object && parsedData2[key] instanceof Object) {
       return [...acc, {
-        type: 'keysList', key, value: '', children: iterAst(parsedData1[key], parsedData2[key]),
+        type: 'nested', key, value: '', children: iterAst(parsedData1[key], parsedData2[key]),
       }];
     }
-    if (parsedData1[key] && !parsedData2[key]) {
-      return [...acc, { type: 'removed', key, value: parsedData1[key] }];
+    if (parsedData1[key] && parsedData2[key] === undefined) {
+      return [...acc, { type: 'removed', key, curValue: parsedData1[key] }];
     }
-    if (parsedData2[key] && !parsedData1[key]) {
-      return [...acc, { type: 'added', key, value: parsedData2[key] }];
+    if (parsedData2[key] && parsedData1[key] === undefined) {
+      return [...acc, { type: 'added', key, curValue: parsedData2[key] }];
     }
     if (parsedData2[key] !== parsedData1[key]) {
       return [...acc, {
-        type: 'updated', key, value: parsedData2[key], oldValue: parsedData1[key],
+        type: 'updated', key, curValue: parsedData2[key], oldValue: parsedData1[key],
       }];
     }
-    return [...acc, { type: 'equal', key, value: parsedData2[key] }];
+    return [...acc, { type: 'equal', key, curValue: parsedData2[key] }];
   }, []);
 };
 
