@@ -3,8 +3,9 @@ import path from 'path';
 import ini from 'ini';
 import yaml from 'js-yaml';
 import iterAst from '../src/compareParsedData';
-import renderToJson from '../src/renderToJson';
+import renderToSructuredText from '../src/renderToStructuredText';
 import renderToPlain from '../src/renderToPlain';
+import renderToJson from '../src/renderToJson';
 
 export default (filePath1, filePath2, outputFormat) => {
   const parsersList = {
@@ -13,8 +14,9 @@ export default (filePath1, filePath2, outputFormat) => {
     ini: data => ini.parse(data),
   };
   const outputFormatsList = {
-    json: ast => renderToJson(ast),
+    sructuredText: ast => renderToSructuredText(ast),
     plain: ast => renderToPlain(ast),
+    json: ast => renderToJson(ast),
   };
   const typeOfFiles = path.extname(filePath1).slice(1);
   const dataOfFile1 = fs.readFileSync(filePath1, 'utf8');
