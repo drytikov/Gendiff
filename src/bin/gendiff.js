@@ -8,7 +8,7 @@ program
   .arguments('<firstConfig>, <secondConfig>')
   .option('-f, --format [type]', 'Output format')
   .action((firstConfig, secondConfig, options) => {
-    const outputFormat = options.format || 'json';
+    const outputFormat = options.format || 'sructuredText';
     return genDiff(firstConfig, secondConfig, outputFormat);
   });
 
