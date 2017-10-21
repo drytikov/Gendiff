@@ -1,37 +1,12 @@
-const makeSpaces = (num) => {
-  if (num === 0) {
-    return '';
-  }
-  return ` ${makeSpaces(num - 1)}`;
-};
-
-const valueToString = (value, spaces) => {
-  if (value instanceof Object) {
-    const result = Object.keys(value).reduce((acc, key) =>
-      [...acc, `${makeSpaces(spaces + 6)}${[key]}: ${value[key]}`], []);
-    return `${['{', ...result, `${makeSpaces(spaces + 2)}}`].join('\n')}`;
-  }
-  return value;
-};
-
-const result = (ast, spaces = 2) =>
-  ast.map((item) => {
-    switch (item.type) {
-      case 'nested':
-        return `${makeSpaces(spaces + 2)}${item.key}: {\n${result(item.children, spaces + 4).join('\n')}\n${makeSpaces(spaces + 2)}}`;
-      case 'removed':
-        return `${makeSpaces(spaces)}- ${item.key}: ${valueToString(item.curValue, spaces)}`;
-      case 'added':
-        return `${makeSpaces(spaces)}+ ${item.key}: ${valueToString(item.curValue, spaces)}`;
-      case 'updated':
-        return `${makeSpaces(spaces)}+ ${item.key}: ${valueToString(item.curValue, spaces)}\n${makeSpaces(spaces)}- ${item.key}: ${item.oldValue}`;
-      case 'equal':
-        return `${makeSpaces(spaces + 2)}${item.key}: ${item.curValue}`;
-      default:
-        return item;
+const result = ast =>
+  ast.reduce((acc, item) => {
+    if (item.type === 'nested') {
+      const value = { ...acc[item.type], [item.key]: { ...result(item.children) } };
+      return { ...acc, [item.type]: value };
     }
-  });
+    return { ...acc, [item.type]: { ...acc[item.type], [item.key]: item.curValue } };
+  }, {});
 
-const renderToJson = ast => `${['{', ...result(ast), '}'].join('\n')}\n`;
+const renderToJson = ast => `${JSON.stringify(result(ast))}\n`;
 
 export default renderToJson;
