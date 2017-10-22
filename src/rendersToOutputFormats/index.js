@@ -4,9 +4,9 @@ import renderToJson from '../rendersToOutputFormats/renderToJson';
 
 export default (outputFormat) => {
   const outputFormatsList = {
-    sructuredText: ast => renderToSructuredText(ast),
-    plain: ast => renderToPlain(ast),
-    json: ast => renderToJson(ast),
+    sructuredText: renderToSructuredText,
+    plain: renderToPlain,
+    json: renderToJson,
   };
   return outputFormatsList[outputFormat];
 };
