@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import ini from 'ini';
 import yaml from 'js-yaml';
-import iterAst from '../src/compareParsedData';
-import getRender from '../src/rendersToOutputFormats';
+import iterAst from './compareParsedData';
+import getRender from './rendersToOutputFormats';
 
 export default (filePath1, filePath2, outputFormat) => {
   const parsersList = {
