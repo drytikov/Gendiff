@@ -1,6 +1,6 @@
 {
   "name": "gendiff-test",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "dist/index.js",
   "bin": {
@@ -20,17 +20,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drytikov/project-lvl2-s129.git"
+    "url": "git+https://github.com/drytikov/Gendiff.git"
   },
   "author": "drytikov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/drytikov/project-lvl2-s129/issues"
+    "url": "https://github.com/drytikov/Gendiff/issues"
   },
   "jest": {
     "testEnvironment": "node"
   },
-  "homepage": "https://github.com/drytikov/project-lvl2-s129#readme",
+  "homepage": "https://github.com/drytikov/Gendiff#readme",
   "dependencies": {
     "commander": "^2.11.0",
     "ini": "^1.3.4",
