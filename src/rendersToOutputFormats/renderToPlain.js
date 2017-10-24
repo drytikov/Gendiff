@@ -1,16 +1,17 @@
+const renderValue = value => (typeof value === 'object' ? 'complex value' : `value: ${value}`);
+
 const result = (ast, name) =>
   ast.map((item) => {
     const itemName = (name === undefined) ? item.key : `${name}.${item.key}`;
-    const value = (item.curValue instanceof Object) ? 'complex value' : `value: ${item.curValue}`;
     switch (item.type) {
       case 'nested':
         return result(item.children, itemName);
       case 'removed':
         return `Property '${itemName}' was removed\n`;
       case 'added':
-        return `Property '${itemName}' was added with ${value}\n`;
+        return `Property '${itemName}' was added with ${renderValue(item.curValue)}\n`;
       case 'updated':
-        return `Property '${itemName}' was updated. From value: ${item.oldValue} to ${value}\n`;
+        return `Property '${itemName}' was updated. From value: ${item.oldValue} to ${renderValue(item.curValue)}\n`;
       default:
         return '';
     }

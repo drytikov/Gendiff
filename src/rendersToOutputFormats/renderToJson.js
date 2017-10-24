@@ -1,7 +1,6 @@
 const result = ast =>
   ast.reduce((acc, item) => {
     if (item.type === 'nested') {
-      console.log(acc[item.type]);
       const value = { ...acc[item.type], [item.key]: { ...result(item.children) } };
       return { ...acc, [item.type]: value };
     }
