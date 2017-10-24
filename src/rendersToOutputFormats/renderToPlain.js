@@ -1,21 +1,21 @@
 const result = (ast, name) =>
-  ast.filter(item => item.type !== 'equal').map((item) => {
+  ast.map((item) => {
     const itemName = (name === undefined) ? item.key : `${name}.${item.key}`;
     const value = (item.curValue instanceof Object) ? 'complex value' : `value: ${item.curValue}`;
     switch (item.type) {
       case 'nested':
-        return result(item.children, itemName).join('\n');
+        return result(item.children, itemName);
       case 'removed':
-        return `Property '${itemName}' was removed`;
+        return `Property '${itemName}' was removed\n`;
       case 'added':
-        return `Property '${itemName}' was added with ${value}`;
+        return `Property '${itemName}' was added with ${value}\n`;
       case 'updated':
-        return `Property '${itemName}' was updated. From value: ${item.oldValue} to ${value}`;
+        return `Property '${itemName}' was updated. From value: ${item.oldValue} to ${value}\n`;
       default:
-        return item;
+        return '';
     }
-  });
+  }).join('');
 
-const renderToPlain = ast => `${result(ast).join('\n')}\n`;
+const renderToPlain = ast => `${result(ast)}`;
 
 export default renderToPlain;

@@ -8,10 +8,10 @@ const iterAst = (parsedData1, parsedData2) => {
         type: 'nested', key, value: '', children: iterAst(parsedData1[key], parsedData2[key]),
       };
     }
-    if (parsedData1[key] && parsedData2[key] === undefined) {
+    if (!_.has(parsedData2, key)) {
       return { type: 'removed', key, curValue: parsedData1[key] };
     }
-    if (parsedData2[key] && parsedData1[key] === undefined) {
+    if (!_.has(parsedData1, key)) {
       return { type: 'added', key, curValue: parsedData2[key] };
     }
     if (parsedData2[key] !== parsedData1[key]) {

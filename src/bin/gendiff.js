@@ -9,8 +9,7 @@ program
   .arguments('<firstConfig>, <secondConfig>')
   .option('-f, --format <type>', 'Output format')
   .action((firstConfig, secondConfig, options) => {
-    const outputFormat = options.format || 'sructuredText';
-    const result = genDiff(firstConfig, secondConfig, outputFormat);
+    const result = genDiff(firstConfig, secondConfig, options.format);
     console.log(result);
     return result;
   });

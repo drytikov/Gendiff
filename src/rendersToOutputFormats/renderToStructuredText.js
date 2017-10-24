@@ -20,7 +20,7 @@ const result = (ast, spaces = 2) =>
   ast.map((item) => {
     switch (item.type) {
       case 'nested':
-        return `${makeSpaces(spaces + 2)}${item.key}: {\n${_.flatten(result(item.children, spaces + 4)).join('\n')}\n${makeSpaces(spaces + 2)}}`;
+        return `${makeSpaces(spaces)}  ${item.key}: {\n${_.flatten(result(item.children, spaces + 4)).join('\n')}\n${makeSpaces(spaces)}  }`;
       case 'removed':
         return `${makeSpaces(spaces)}- ${item.key}: ${valueToString(item.curValue, spaces)}`;
       case 'added':
@@ -29,9 +29,9 @@ const result = (ast, spaces = 2) =>
         return [`${makeSpaces(spaces)}+ ${item.key}: ${valueToString(item.curValue, spaces)}`,
           `${makeSpaces(spaces)}- ${item.key}: ${item.oldValue}`];
       case 'equal':
-        return `${makeSpaces(spaces + 2)}${item.key}: ${item.curValue}`;
+        return `${makeSpaces(spaces)}  ${item.key}: ${item.curValue}`;
       default:
-        return item;
+        return '';
     }
   });
 
