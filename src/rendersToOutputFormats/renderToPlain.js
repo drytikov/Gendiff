@@ -5,7 +5,7 @@ const result = (ast, name) =>
     const itemName = (name === undefined) ? item.key : `${name}.${item.key}`;
     switch (item.type) {
       case 'nested':
-        return result(item.children, itemName);
+        return result(item.curValue, itemName);
       case 'removed':
         return `Property '${itemName}' was removed\n`;
       case 'added':
