@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const typesList = [
+const keyTypes = [
   {
     type: 'nested',
     check: (first, second, key) =>
@@ -36,7 +36,7 @@ const typesList = [
 const iterAst = (parsedData1, parsedData2) => {
   const uniqueItems = _.union(Object.keys(parsedData1), Object.keys(parsedData2));
   return uniqueItems.map((key) => {
-    const { type, process } = _.find(typesList, item => item.check(parsedData1, parsedData2, key));
+    const { type, process } = _.find(keyTypes, item => item.check(parsedData1, parsedData2, key));
     const value = process(parsedData1[key], parsedData2[key], iterAst);
     return { type, key, ...value };
   });
