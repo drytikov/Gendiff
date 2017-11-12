@@ -1,21 +1,21 @@
 const renderValue = value => (typeof value === 'object' ? 'complex value' : `value: ${value}`);
 
+const itemName = (item, name) => ((name === undefined) ? item.key : `${name}.${item.key}`);
+
+const keyTypes = {
+  nested: (item, name, f) =>
+    f(item.curValue, itemName(item, name)),
+  removed: (item, name) =>
+    `Property '${itemName(item, name)}' was removed\n`,
+  added: (item, name) =>
+    `Property '${itemName(item, name)}' was added with ${renderValue(item.curValue)}\n`,
+  updated: (item, name) =>
+    `Property '${itemName(item, name)}' was updated. From value: ${item.oldValue} to ${renderValue(item.curValue)}\n`,
+  equal: () => '',
+};
+
 const result = (ast, name) =>
-  ast.map((item) => {
-    const itemName = (name === undefined) ? item.key : `${name}.${item.key}`;
-    switch (item.type) {
-      case 'nested':
-        return result(item.curValue, itemName);
-      case 'removed':
-        return `Property '${itemName}' was removed\n`;
-      case 'added':
-        return `Property '${itemName}' was added with ${renderValue(item.curValue)}\n`;
-      case 'updated':
-        return `Property '${itemName}' was updated. From value: ${item.oldValue} to ${renderValue(item.curValue)}\n`;
-      default:
-        return '';
-    }
-  }).join('');
+  ast.map(item => keyTypes[item.type](item, name, result)).join('');
 
 const renderToPlain = ast => `${result(ast)}`;
 
