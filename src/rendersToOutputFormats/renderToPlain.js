@@ -14,9 +14,7 @@ const keyTypes = {
   equal: () => '',
 };
 
-const result = (ast, name) =>
-  ast.map(item => keyTypes[item.type](item, name, result)).join('');
-
-const renderToPlain = ast => `${result(ast)}`;
+const renderToPlain = (ast, name) =>
+  ast.map(item => keyTypes[item.type](item, name, renderToPlain)).join('');
 
 export default renderToPlain;
