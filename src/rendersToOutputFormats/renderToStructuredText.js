@@ -16,24 +16,22 @@ const valueToString = (value, spaces) => {
   return value;
 };
 
+const keyTypes = {
+  nested: (item, spaces, f) =>
+    `${makeSpaces(spaces)}  ${item.key}: {\n${_.flatten(f(item.curValue, spaces + 4)).join('\n')}\n${makeSpaces(spaces)}  }`,
+  removed: (item, spaces) =>
+    `${makeSpaces(spaces)}- ${item.key}: ${valueToString(item.curValue, spaces)}`,
+  added: (item, spaces) =>
+    `${makeSpaces(spaces)}+ ${item.key}: ${valueToString(item.curValue, spaces)}`,
+  updated: (item, spaces) =>
+    [`${makeSpaces(spaces)}+ ${item.key}: ${valueToString(item.curValue, spaces)}`,
+      `${makeSpaces(spaces)}- ${item.key}: ${item.oldValue}`],
+  equal: (item, spaces) =>
+    `${makeSpaces(spaces)}  ${item.key}: ${item.curValue}`,
+};
+
 const result = (ast, spaces = 2) =>
-  ast.map((item) => {
-    switch (item.type) {
-      case 'nested':
-        return `${makeSpaces(spaces)}  ${item.key}: {\n${_.flatten(result(item.curValue, spaces + 4)).join('\n')}\n${makeSpaces(spaces)}  }`;
-      case 'removed':
-        return `${makeSpaces(spaces)}- ${item.key}: ${valueToString(item.curValue, spaces)}`;
-      case 'added':
-        return `${makeSpaces(spaces)}+ ${item.key}: ${valueToString(item.curValue, spaces)}`;
-      case 'updated':
-        return [`${makeSpaces(spaces)}+ ${item.key}: ${valueToString(item.curValue, spaces)}`,
-          `${makeSpaces(spaces)}- ${item.key}: ${item.oldValue}`];
-      case 'equal':
-        return `${makeSpaces(spaces)}  ${item.key}: ${item.curValue}`;
-      default:
-        return '';
-    }
-  });
+  ast.map(item => keyTypes[item.type](item, spaces, result));
 
 const renderToStructuredText = ast => `${['{', ...result(ast), '}'].join('\n')}\n`;
 
