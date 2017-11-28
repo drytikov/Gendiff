@@ -33,6 +33,6 @@ const keyTypes = {
 const result = (ast, spaces = 2) =>
   ast.map(item => keyTypes[item.type](item, spaces, result));
 
-const renderToStructuredText = ast => `${['{', ...result(ast), '}'].join('\n')}\n`;
+const renderToStructuredText = ast => `${['{', ..._.flatten(result(ast)), '}'].join('\n')}\n`;
 
 export default renderToStructuredText;
