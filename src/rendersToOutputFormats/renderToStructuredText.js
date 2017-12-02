@@ -18,7 +18,7 @@ const valueToString = (value, spaces) => {
 
 const keyTypes = {
   nested: (item, spaces, f) =>
-    `${makeSpaces(spaces)}  ${item.key}: {\n${_.flatten(f(item.curValue, spaces + 4)).join('\n')}\n${makeSpaces(spaces)}  }`,
+    `${makeSpaces(spaces + 2)}${item.key}: {\n${_.flatten(f(item.curValue, spaces + 4)).join('\n')}\n${makeSpaces(spaces + 2)}}`,
   removed: (item, spaces) =>
     `${makeSpaces(spaces)}- ${item.key}: ${valueToString(item.curValue, spaces)}`,
   added: (item, spaces) =>
